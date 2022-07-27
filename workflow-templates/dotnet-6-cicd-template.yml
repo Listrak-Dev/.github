@@ -1,0 +1,12 @@
+name: Listrak - .NET 6 CI/CD
+
+on:
+  workflow_call:
+  push:
+    branches: [ "feature/*", $default_branch ]
+  pull_request:
+    branches: [ $default_branch ]
+
+jobs:
+  build:
+    uses: Listrak-Dev/.github/workflows/dotnet-6-ci.yml@main
