@@ -9,4 +9,4 @@ on:
 
 jobs:
   build:
-    uses: Listrak-Dev/.github/workflows/dotnet-6-ci.yml@main
+    uses: Listrak-Dev/.github/.github/workflows/dotnet-6-ci.yml@main
