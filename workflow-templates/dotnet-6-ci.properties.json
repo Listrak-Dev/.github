@@ -1,7 +1,6 @@
 {
     "name": "Listrak - .NET 6.x Organization Workflow",
     "description": ".NET 6.x starter workflow.",
-    "iconName": "example-icon",
     "categories": [
         "Microsoft Visual Studio Solution",
         "C#"
