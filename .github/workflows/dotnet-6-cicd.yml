@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  REPO_NAME: ${{ github.event.repository.name }}
 
 jobs:
   ci-dotnet:
@@ -25,7 +26,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release --logger trx --results-directory "TestResults"
     - name: Publish
-      run: dotnet publish --no-restore --configuration Release -o ${{ github.repository.name }}-publish
+      run: dotnet publish --no-restore --configuration Release -o ${{ env.REPO_NAME }}-publish
       if: ${{ success() }}
 
     - name: Upload dotnet test results
@@ -37,8 +38,8 @@ jobs:
     - name: Upload .NET Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ github.repository.name }}-publish
-        path: ${{ github.repository.name }}-publish
+        name: ${{ env.REPO_NAME }}-publish
+        path: ${{ env.REPO_NAME }}-publish
       if: success()
 
   docker-build-and-publish:
@@ -57,7 +58,7 @@ jobs:
     - name: Download Artifact From Previous Build Job
       uses: actions/download-artifact@v3
       with:
-        name: ${{ github.repository.name }}-publish
+        name: ${{ env.REPO_NAME }}-publish
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@v4
