@@ -23,8 +23,9 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release --logger trx --results-directory "TestResults"
     - name: Publish
-      run: dotnet publish --no-restore --configuration Release -o ${{ github.repository }}-publish
+      run: dotnet publish --no-restore --configuration Release -o ${{ github.repository.name }}-publish
       if: ${{ success() }}
+
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v3
       with:
@@ -34,8 +35,8 @@ jobs:
     - name: Upload .NET Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ github.repository }}-publish
-        path: ${{ github.repository }}-publish
+        name: ${{ github.repository.name }}-publish
+        path: ${{ github.repository.name }}-publish
       if: success()
 
   docker-build-and-publish:
@@ -53,7 +54,7 @@ jobs:
     - name: Download Artifact From Previous Build Job
       uses: actions/download-artifact@v3
       with:
-        name: ${{ github.repository }}-publish
+        name: ${{ github.repository.name }}-publish
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@v4
