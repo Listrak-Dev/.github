@@ -42,6 +42,7 @@ jobs:
       if: success()
 
   docker-build-and-publish:
+    needs: ci-dotnet
     runs-on: ubuntu-latest
     permissions:
       contents: read
