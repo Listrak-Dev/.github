@@ -1,7 +1,6 @@
 name: Listrak - .NET 6 CI/CD
 
 on:
-  workflow_call:
   workflow_dispatch:
   push:
     branches: [ "feature/*", $default_branch ]
