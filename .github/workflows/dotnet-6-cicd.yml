@@ -39,7 +39,6 @@ jobs:
         path: TestResults
       if: ${{ always() }}
 
-
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
@@ -47,16 +46,10 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Generate IMAGE_NAME
-      id: IMAGE_NAME
-      uses: ASzc/change-string-case-action@v2
-      with:
-        string: ${{ github.repository }}
-
     - name: Build and push
       # Need to use a different action that better supports Windows nodes for performing docker builds
       # https://github.com/docker/build-push-action/issues/18
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: ${{ steps.IMAGE_NAME.outputs.lowercase }}
+        image: ${{ env.REPO_NAME }}
         registry: ${{ env.REGISTRY }}
