@@ -21,12 +21,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
     - name: Restore dependencies
       run: dotnet restore
 
@@ -60,9 +54,10 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push
-      uses: docker/build-push-action@v3
+      # Need to use a different action that better supports Windows nodes for performing docker builds
+      uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        context: .
-        push: true
+        image: ${{ env.IMAGE_NAME }}
+        registry: ${{ env.REGISTRY }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
